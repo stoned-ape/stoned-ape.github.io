@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+  </head>
+  <body>
+    <script>
+      let POST_TITLE="3D Surface Plotter"
+    </script>
+    <script src="/posts/posts.js"></script>
+    <div class="post_body">
+      The only thing I miss about when my school provided free MatLab subscriptions was the surface
+      plot functionality.  Ive since been unable to find an equivalent library in python so I decided
+      to make my own.  A parameterized 2D surface embedded in 3D space is defined by three functions of two
+      parameters, u and v, one for x, one for y, and one for z. You must also specify a range for
+      these two parameters.
+      <p>
+        <iframe height="750" src="/posts/plotter3d/index2.html" width="500">
+        </iframe>
+      </p>
+      <p>
+      View code <a href="https://editor.p5js.org/mark-turpen@tamu.edu/sketches/1Z0xKkBQ9">here:</a>
+      </p>
+      <p>
+        The default plot for this program is animated because it uses the optional parameter <i>t</i>.
+        <i>t</i> represents the time in seconds since the program started.
+      </p>
+      <p>
+        <img src="/posts/plotter3d/Defaultplot.png.png">
+      </p>
+      <p>
+        Here are some shapes to try plotting.  Just copy and paste the following into their respective
+        fields.
+      </p>
+      <p>
+        Sphere:
+      </p>
+      <p>
+        x=cos(u)*sin(v)
+      </p>
+      <p>
+        y=cos(v)
+      </p>
+      <p>
+        z=sin(u)*sin(v)
+      </p>
+      <p>
+        u range: [0,2*PI]
+      </p>
+      <p>
+        v range: [0,PI]
+      </p>
+      <p>
+        <img src="/posts/plotter3d/sphereplot.png.png">
+      </p>
+      <p>
+        Hyperbolic Paraboliod:
+      </p>
+      <p>
+        x=u
+      </p>
+      <p>
+        y=v*u
+      </p>
+      <p>
+        z=v
+      </p>
+      <p>
+        u range: [-1,1]
+      </p>
+      <p>
+        v range: [-1,1]
+      </p>
+      <p>
+        <img src="/posts/plotter3d/hyperbolicparaboloid.png.png">
+      </p>
+      <p>
+        Cylinder:
+      </p>
+      <p>
+        x=cos(u)
+      </p>
+      <p>
+        y=v
+      </p>
+      <p>
+        z=sin(u)
+      </p>
+      <p>
+        u range: [0,2*PI]
+      </p>
+      <p>
+        v range: [-1,1]
+      </p>
+      <p>
+        <img src="/posts/plotter3d/cylinderplot.png.png">
+      </p>
+      <p>
+        Procedural Terrain with Perlin Noise:
+      </p>
+      <p>
+        x=u
+      </p>
+      <p>
+        y=noise(u-t,v-t)
+      </p>
+      <p>
+      z=v
+      </p>
+      <p>
+        u range: [-2,2]
+      </p>
+      <p>
+        v range: [-2,2]
+      </p>
+      <p>
+        <img src="/posts/plotter3d/perlinnoise.png.png">
+      </p>
+      <p>
+        This program works by dividing both the u and v range into 30 equal pieces and drawing a square
+        (two triangles) at each permutation of the two ranges.  Since were not shading the shape, or
+        implementing back-face culling, we do not care whether the surface is orientable (has two distinct sides).  This means we can plot the Mobius Strip:
+      </p>
+      <p>
+        <img src="/posts/plotter3d/mobius.png.png">
+      </p>
+      <p>
+        <a href="https://math.stackexchange.com/questions/1410144/a-proof-for-the-mobius-strip-parametrization">Parameters</a>
+      </p>
+      <p>
+        And the Klein Bottle:
+      </p>
+      <p>
+        <img src="/posts/plotter3d/klienbottle1.png.png">
+      </p>
+      <p>
+        <img src="/posts/plotter3d/klienbottle2.png.png">
+      </p>
+      <p>
+        <a href="https://mathcurve.com/surfaces.gb/klein/klein.shtml">Parameters</a>
+      </p>
+      <p>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async
+                src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        If we do want to implement shading we will need to know the surface normals. We first approximate the
+        partial derivatives,
+        \[{d\vec{S} \over du} = {\vec{S}(u+\Delta u,v)-\vec{S}(u,v) \over \Delta u}\]
+        Then take the cross product to get the gradient,
+        \[\nabla \vec{S} = {d\vec{S} \over du}\times {d\vec{S} \over dv} \]
+        And the surface normal is just the normalized gradient.
+        \[\vec{n} = { \nabla \vec{S}\over |\nabla \vec{S}|} \]
+        The brightness (B) of each triangle is
+        \[B=\vec{n} \cdot \vec{L}\]
+        Where L is the light direction.
+      </p>
+      <p>
+        <a href="https://4.bp.blogspot.com/-YY1JlBUEQ9I/XvstNkXSwyI/AAAAAAAAAQc/_PZIV5zdGdQKv3vtneLcsfiWFHf2yhEvQCNcBGAsYHQ/s1600/Screen%2BShot%2B2020-06-28%2Bat%2B2.18.40%2BPM.png" imageanchor="1" ><img border="0" src="https://4.bp.blogspot.com/-YY1JlBUEQ9I/XvstNkXSwyI/AAAAAAAAAQc/_PZIV5zdGdQKv3vtneLcsfiWFHf2yhEvQCNcBGAsYHQ/s400/Screen%2BShot%2B2020-06-28%2Bat%2B2.18.40%2BPM.png" width="400" height="285" data-original-width="526" data-original-height="375" /></a>
+      </p>
+      <p>
+      Here are some interesting figures I generated with this program.
+      </p><p>
+      Torus:
+      </p><p>
+        <img src="/posts/plotter3d/torusplot.png.png">
+      </p><p>
+      Hyperboloid of One Sheet:
+      </p><p>
+        <img src="/posts/plotter3d/onesheet.png.png">
+      </p><p>
+      Cube:
+      </p><p>
+        <img src="/posts/plotter3d/cubeplot.png.png">
+      </p><p>
+      Octahedron:
+      </p><p>
+        <img src="/posts/plotter3d/octahedronplot.png.png">
+      </p><p>
+      Its interesting that polar roses in 3D kind of look like electron orbitals.
+      </p><p>
+        <img src="/posts/plotter3d/polarrose1.png.png">
+      </p>
+      <p>
+        <img src="/posts/plotter3d/polarrose2.png.png">
+      </p>
+    </div>
+  </body>
+</html>

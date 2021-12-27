@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+  </head>
+  <body>
+    <script>
+      let POST_TITLE="Gyroscopic Stabilization on The iPhone"
+    </script>
+    <script src="/posts/posts.js"></script>
+    <div class="post_body">
+      <div class="p5div">
+        <input type=button onclick="onClick()" value="click to activate">
+      </div>
+      <script src="/p5.js"></script>
+      <script src="/vec3.js"></script>
+      View code <a href="https://editor.p5js.org/mark-turpen@tamu.edu/sketches/eUJ-6wT0t/sketch.js" target="_blank">here</a>
+      <p>
+        This demonstration will not work on a laptop/desktop since it requires an internal gyroscope.  This will work on iPhone but I'm unsure about andriod.
+      </p>
+      <p>
+	       This was my first attempt to utilized the iPhone's gyroscope to stabilize the orientation of a virtual object relative to the outside world for Virtual Reality applications.  In this post I present two techniques to accomplish this goal, the Gimbal Based Method (cube within the rings) and the Quaternion Based Method (lone cube a the bottom).
+      </p>
+      <p>
+       This project was orginally developed as an iPhone app in swift, you can view the xcode project on my github <a href="https://github.com/stoned-ape/phonetest5" target="_blank">here</a>
+      </p>
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <p>
+        <b> Gimbal Based Method:</b>
+      </p>
+      <p>
+        Every frame, the internal gyroscope gives us the angular velocity about the x,y, and z axes
+        \[Given:\]
+        \[\frac{d\theta_x}{dt},
+        \frac{d\theta_y}{dt},
+        \frac{d\theta_z}{dt} \]
+
+        I derived the following three equations to compute the rotation rate of the middle ring (dtheta1/dt), the inner ring (dtheta2/dt), and the cube (dtheta3/dt), given the x,y,z rotation rates.
+
+        \[\frac{d\theta_1}{dt}=-\frac{d\theta_x}{dt}\]
+
+        \[\frac{d\theta_2}{dt}=
+        \frac{d\theta_y}{dt}sin(\theta_x)+
+        \frac{d\theta_z}{dt}cos(\theta_x)\]
+
+        \[\frac{d\theta_3}{dt}=
+        \frac{d\theta_y}{dt}cos(\theta_x)cos(\theta_2)-
+        \frac{d\theta_z}{dt}sin(\theta_x)cos(\theta_2)\]
+
+        The values of the theta_x and theta_2 can be found by numeric integration.
+
+        \[\theta_x(dt)=\theta_x(0)+\frac{d\theta_x}{dt}(0)dt\]
+        \[\theta_x(\Delta t)=\theta_x(0)+\frac{d\theta_x}{dt}(0)\Delta t\]
+        \[\theta_x(t+\Delta t)=\theta_x(t)+\frac{d\theta_x}{dt}(t)\Delta t\]
+        Where
+        \[\Delta t= \frac{1}{frameRate}\]
+      </p>
+      <p>
+        <b>Quaternion Based Method:</b>
+      </p>
+      <p>
+        Quaternions are an extension of the complex numbers with three imaginary parts i,j,k.
+        The real part is representated as a scalar and the imaginary parts are represented as a 3D vector.
+      </p>
+      <p>
+        The quaternion q represents a rotation by an angle theta about an axis <b>a</b>.
+        \[q=cos(\frac{\theta}{2})+\vec{a}sin(\frac{\theta}{2})\]
+
+        The product of two rotation quaternions (q1,q2) is a quaternion (q3) that represents a rotation by q1 followed by a rotation by q2.
+
+        First we convert the three rotation rates into quaternions.
+
+        \[q_x=cos(-\frac{1}{2}\frac{d\theta_x}{dt}\Delta t)
+        +(1,0,0)sin(-\frac{1}{2}\frac{d\theta_x}{dt}\Delta t)\]
+
+        \[q_y=cos(-\frac{1}{2}\frac{d\theta_y}{dt}\Delta t)
+        +(0,1,0)sin(-\frac{1}{2}\frac{d\theta_y}{dt}\Delta t)\]
+
+        \[q_z=cos(-\frac{1}{2}\frac{d\theta_z}{dt}\Delta t)
+        +(0,0,1)sin(-\frac{1}{2}\frac{d\theta_z}{dt}\Delta t)\]
+
+        Then, if q_n represents the rotation of the phone on the n'th frame, q_n can be computed by the following recurrence relation.
+
+        \[q_0=0+(0,0,1)\]
+        \[q_n=q_x*q_y*q_z*q_{n-1}\]
+
+        The choice of q_0 is arbitrary.  The product q_x*q_y*q_z represents the total rotation experienced by the phone in the time between two frames.  Thus q_n is just the orientation during the previous frame rotated by the change in orientation between frames.
+      </p>
+
+      <div class="separator" style="clear: both;">
+        <img src="/posts/gyro/thumbnail.png">
+      </div>
+
+      <script type="text/javascript" >
+        let theta1=0
+        let theta2=0
+        let theta3=0
+
+        let dthetaXdt=0;
+        let dthetaYdt=0;
+        let dthetaZdt=0;
+
+        let dtheta1dt=0;
+        let dtheta2dt=0;
+        let dtheta3dt=0;
+
+        let thetaX=0;
+        let thetaY=0;
+        let thetaZ=0;
+
+        let det=false
+
+        let t=0,dt=1;
+
+        function cb(event){
+          dthetaXdt=event.rotationRate.alpha*PI/180;
+          dthetaYdt=event.rotationRate.beta*PI/180;
+          dthetaZdt=event.rotationRate.gamma*PI/180;
+
+          let ct=millis()/1000;
+          dt=ct-t;
+          t=ct;
+
+          det=true;
+        }
+
+        function onClick(){
+          console.log("click")
+          if (typeof DeviceMotionEvent.requestPermission === 'function') {
+            DeviceMotionEvent.requestPermission()
+              .then(permissionState => {
+                if (permissionState === 'granted') {
+                  window.addEventListener('devicemotion', cb);
+                }
+              })
+              .catch(console.error);
+          } else {
+            window.addEventListener('devicemotion', cb);
+            // handle regular non iOS 13+ devices
+          }
+        }
+
+        function preload(){
+          console.log("preload")
+        }
+        let canvas,div
+        let q=new Quaternion(0,new vec3(0,0,1))
+        function setup() {
+
+          canvas=createCanvas(340, 2*340,WEBGL);
+          console.log("setup")
+          console.log(canvas)
+          canvas.parent(document.getElementsByClassName("p5div")[0])
+          let disc=createDiv("<p><b>Gimbal Based Method</b></p>")
+          disc.parent(canvas)
+        }
+
+
+
+        function draw(){
+          if(frameCount==1) console.log("draw")
+          background(0);
+          directionalLight(255,255,255,-1,-1,-1);
+          ambientLight(80);
+          dtheta1dt=dthetaXdt;
+          dtheta2dt=dthetaYdt*sin(thetaX)+dthetaZdt*cos(thetaX);
+          dtheta3dt=-dthetaYdt*cos(thetaX)*cos(theta2)
+            +dthetaZdt*sin(thetaX)*cos(theta2)
+          scale(1.5)
+          push();
+          translate(0,-100,0)
+          stroke(0)
+          let r1=100,r2=80,r3=60;
+          noStroke()
+          let detailX=48*2;
+          let detailY=32;
+          //outer ring
+          torus(r1,5,detailX,detailY)
+          push()
+          translate((r1+r2)/2,0,0)
+          rotateZ(PI/2)
+          cylinder(5,20)
+          pop()
+          push()
+          translate(-(r1+r2)/2,0,0)
+          rotateZ(PI/2)
+          cylinder(5,20)
+          pop()
+          //middle ring
+          rotateX(theta1)
+          rotateX(PI/2)
+          torus(80,5,detailX,detailY)
+          push()
+          translate(0,(r2+r3)/2,0)
+          rotateY(PI/2)
+          cylinder(5,20)
+          pop()
+          push()
+          translate(0,-(r2+r3)/2,0)
+          rotateY(PI/2)
+          cylinder(5,20)
+          pop()
+          //inner ring
+          rotateY(theta2);
+          rotateY(PI/2)
+          torus(r3,5,detailX,detailY)
+          //box
+          rotateX(theta3);
+          box(50)
+          rotateZ(PI/2)
+          cylinder(5,2*r3)
+          if(det && dtheta1dt==dtheta1dt){
+            theta1+=dtheta1dt*dt;
+            theta2+=dtheta2dt*dt;
+            theta3+=dtheta3dt*dt;
+
+            thetaX+=dthetaXdt*dt;
+            thetaY+=dthetaYdt*dt;
+            thetaZ+=dthetaZdt*dt;
+          }
+          pop()
+          translate(0,100,0)
+          let qx=angleAxis(+dthetaXdt*dt,new vec3(1,0,0))
+          let qy=angleAxis(-dthetaYdt*dt,new vec3(0,1,0))
+          let qz=angleAxis(+dthetaZdt*dt,new vec3(0,0,1))
+          rotate(q.getAngle(),q.getAxis().toPV())
+          box(80)
+          q=qx.mult(qy).mult(qz).mult(q)
+        }
+      </script>
+    </div>
+  </body>
+</html>

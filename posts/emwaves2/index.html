@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+  </head>
+  <body>
+    <script>
+      let POST_TITLE="Simulating The Double Slit Experiment with Electro-Magnetic Waves"
+    </script>
+    <script src="/posts/posts.js"></script>
+    <div class="post_body">
+      Use the buttons below to select which simulation to see.
+      <div class="p5div">
+        <div class="p5buttons"></div>
+      </div>
+      <div>
+        <script src="/vec3.js"></script>
+        <script src="/posts/emwaves2/wave_equation/sketch.js"></script>
+  	  </div>
+      <p>
+  	    View code <a href="https://editor.p5js.org/mark-turpen@tamu.edu/sketches/busAU23gb">here:</a>
+  	  </p>
+      <p>
+        This simulation computes solutions to the wave equation which is derived from Maxwell's Laws of Electro-Magnatism.
+      </p>
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <p>
+        \[\nabla^2 \vec{E}= {1\over c^2}{d^2\vec{E} \over dt^2}\]
+        In this program I am ignoring all but the z component of the electric field.  The hight of the surface at any point represents the magnitude of the E field at that point.  At the start of the program I defined the E field at every point on the grid and solve the wave equation to determine how the field changes over time.  I can also define a boundry condion, or a place were the electric feild has to be zero (around the boundry of the square).  Since the waves cannot pass through the boundry, they must reflect off of it (press 'reflection' to see this).  This simulates how radio wave are reflected by metal since the current induced in the metal exactly cancels the electric field, thus creating a boundry condition.  A metal box like this is what prevents microwaves in microwave ovens from escaping and heating the environment.
+      </p>
+      <p>
+        When light moves from air to water, the electro-magnetic waves are bent or 'refracted', this is because light travels faster in air than it does in water.  I can simulate this by reducting the speed of light on one side of the grid (press 'refraction' to see this).
+      </p>
+      <p>
+        Finally, if we create a boundary with two holes in it, the waves coming out of the holes will interefere with each other and create this interesting pattern (press 'double slit experiment' to see this).
+      </p>
+      <p>
+      <img src="/posts/emwaves2/doubleslit.png">
+      </p>
+      <p>
+        I stared wondering how wave reflection would look in three dimentions if the waves were bounded by a conductive cube.  Visualizing this was a little more complicated, but what i decided to do was to draw a cube at a point if the magnitued of the E field was greater than some arbitrary constant.
+      </p>
+      <p>
+      <iframe src="/posts/emwaves2/wave_equation3D" width="400" height="450"></iframe>
+      </p>
+      <p>
+         View code <a href="https://editor.p5js.org/mark-turpen@tamu.edu/sketches/dg3dA1jAR">here:</a>
+      </p>
+      <p>
+      <img src="/posts/emwaves2/cube.png">
+      </p>
+      <p>
+        The structure above looks like a 3D analogue of this.
+      </p>
+      <img src="/posts/emwaves2/analog.png">
+    </div>
+  </body>
+</html>

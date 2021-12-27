@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+  </head>
+  <body>
+    <script>
+      let POST_TITLE="Maze Generation and Path Finding"
+    </script>
+    <script src="/posts/posts.js"></script>
+    <div class="post_body">
+      <iframe width='550' height='550' src="/posts/maze/maze1/index.html"></iframe>
+      <p>
+        View code <a href="https://editor.p5js.org/mark-turpen@tamu.edu/sketches/sTIB2_0mE">here:</a>
+      </p>
+      <p>
+        Below I have added an interactive demo for the pathfinding algorithm.  Click on a square to block the path and see how the algorithm adapts.  Click on the square again to unblock it.
+      </p>
+      <p>
+        <iframe width='550' height='550' src="/posts/maze/interactive/index.html"></iframe>
+      </p>
+      <p>
+        View code <a href="https://editor.p5js.org/mark-turpen@tamu.edu/sketches/dL-58Isbu">here:</a>
+      </p>
+      <p>
+        There are two fundamental algorithms at play here, A* pathfinding and the recursive backtracker which generates the mazes.
+        The recursive backtracker will visit every cell with an even numbered x and y coordinate on the grid
+        exactly once and paint it white.  Aside from the edges, for any cell there are four possible cells the backtracker can visit
+        next, two cells up, two cells down, two cells left and two cells to the right.  It will first rule out any cells it has already visited
+        then recursively visit all remaining cells in random order.  When the backtracker moves from one cell to the next it paints
+        the cell between them white.  This method ensures that there is exactly one path between any two even numbered cells.  With
+        this algorithm I can generate arbitrarily large mazes, which are pretty intriguing to look at.
+      </p>
+      <img src="/posts/maze/maze.png">
+    </div>
+  </body>
+</html>

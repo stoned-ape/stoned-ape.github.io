@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+  </head>
+  <body>
+    <script>
+      let POST_TITLE="Ray Tracing a Black Hole on The GPU"
+    </script>
+    <script src="/posts/posts.js"></script>
+    <div class="post_body">
+      In my previous article on ray tracing, the examples I provided could take up to a few minuets to render.  This is because I implemented the algorithm in javascript using the CPU.  With that method, each ray is traced sequentially (one after the other) for every single pixel on the screen.  This is unnecessary because the color value at each pixel is completely independent of every other pixel; therefore it makes a lot more sense to trace every ray in parallel (simultaneously) on the GPU.  I found that I can do this using the OpenGL Shading Language.
+      <p>
+      <iframe width="420" height="236" frameborder="0" src="https://www.shadertoy.com/embed/WtG3DR?gui=true&t=10&paused=false&muted=false" allowfullscreen></iframe>
+      </p>
+      <p>
+        View code <a href="https://www.shadertoy.com/view/WtG3DR">here:</a>
+      </p>
+      <p>
+        In traditional ray tracing, rays of light always move in straight lines, but if we want visualize the effects of gravitation lensing, we need to tweak this.  We move each ray of light a small fixed distance (dt in the code) then use Newtons law of gravity to bend its trajectory, then move a fixed distance again and bend again, iteratively, until the ray hits something in the scene.  The green disk around the black hole is perfectly flat.  It only looks warped because the light it emits is warped.  Note that no special knowledge about General Relativity is leveraged here.  The light ray trajectories are calculated with the exact same method as the orbital trajectories where calculated in my three body problem article.  In black hole scene in the movie <I>Interstellar</I> the ray trajectories that they used did leverage General Relativity, so its interesting how similar this effect looks to the effect in the movie.
+      </p>
+      <p>
+        <img src="/posts/blackhole/hole.png">
+    </div>
+  </body>
+</html>

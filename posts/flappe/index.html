@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+  </head>
+  <body>
+    <script>
+      let POST_TITLE="Coding a Neural Network to Recognize Hand-Written Digits"
+    </script>
+    <script src="/posts/posts.js"></script>
+    <div class="post_body">
+      <p>
+        In the window below, you can see a population of 450 neural networks play a recreation of the popular mobile game Flappy Bird.  This simulation is highly sped up to enable the networks to train quickly.  You can click on the window to watch them train in real time, then click again to speed up training again.  The number in the top right shows how many generations have been simulated, the middle number is the highest score achieved by any bird in any generation so far, and the bottom number is the current score that all living birds have achieved in this generation.  The score is roughly equal to 100 times the number of pipes that have been cleared.
+        <iframe width='600' height='620' src="/posts/flappe/flappybird1/index.html"></iframe>
+      </p>
+      <p>
+        View code <a href="https://editor.p5js.org/mark-turpen@tamu.edu/sketches/C1WHaOURM">here:</a>
+      </p>
+      <p>
+        This algorithm is similar but not identical to Neuro-Evolution of Augmented Topologies (NEAT).  I create a population of neural networks using a javascript translation of the code I presented in my previous article but instead of using back propagation to update the weights and biases, I mutate the network by adding a small random number to each of the weights and biases.  There is also a small probability that a network may gain or lose nodes and layers.  At the end of each generation I sort all 450 networks according to there score.  The probability that a network is copied into the next generation is proportional to its score.  So the next generation will be mostly composed of copies of the highest scoring networks.  Then all the copies are mutated and a new generation is simulated.
+      </p>
+      <p>
+        This program works on the same principles as biological evolution.  At first, all the networks are randomly generation and perform terribly, but by chance, some perform slightly better than others, and it is these networks that are selected to be replicated and then mutated. Most of these mutations are detrimental but by chance some cause higher performance, and are then copied into the next generation.  Over many generations this selective process fine tunes the weights and biases of the networks to play the game far better than they could initially.
+      </p>
+      <p>
+        The highest score I observed after running this simulation for many hours, is about 4,000 pipes cleared.  For reference, the highest score I've been able to achieve at this game is about 100 pipes cleared.
+      </p>
+      <p>
+        If you would like to play the game, click on the window below then press the ENTER key to jump.
+      </p>
+      <p>
+        <iframe width='600' height='600' src="/posts/flappe/flappybird2/index.html"></iframe>
+      </p>
+      <img src="/posts/flappe/thumbnail.png">
+    </div>
+  </body>
+</html>

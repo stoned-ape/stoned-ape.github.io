@@ -1,0 +1,70 @@
+{
+  "array":[
+    {
+      "title":"Gyroscopic Stabilization on The iPhone",
+      "link" :"/posts/gyro",
+      "pic"  :"/posts/gyro/thumbnail.png",
+      "blurb":"This was my first attempt to utilized the iPhone's gyroscope to stabilize the orientation of a virtual object relative to theoutside world for Virtual Reality applications. In this post I present two techniques to accomplish this goal, the Gimbal Based Method and the Quaternion Based Method."
+    },
+    {
+      "title":"Simulating The  Double Slit Experiment with Electro-Magnetic Waves",
+      "link" :"/posts/emwaves2",
+      "pic"  :"/posts/emwaves2/doubleslit.png",
+      "blurb":"This simulation computes solutions to the wave equation which is derived from Maxwell's Laws of Electro-Magnatism."
+    },
+    {
+      "title":"3D Surface Plotter",
+      "link" :"/posts/plotter3d",
+      "pic"  :"/posts/plotter3d/Defaultplot.png.png",
+      "blurb":"The only thing I miss about when my school provided free MatLab subscriptions was the surface plot functionality.  Ive since been unable to find an equivalent library in python so I decided to make my own. "
+    },
+    {
+      "title":"Making Music With Fourier Series / Audiojack Waveform Generator",
+      "link" :"/posts/music/",
+      "pic"  :"/posts/music/fourier.png",
+      "blurb":"The graph that appears in the animations is the Fourier Transform of the sound at a give time.  Red bars on the left corespond to low frequencies, and violet bars on the right correspond to high frequencies.  Notices how the graph is different in each of the four windows."
+    },
+    {
+      "title":"Modeling Diffusion and Total Internal Reflection with Ray Marching",
+      "link" :"/posts/interref/",
+      "pic"  :"/posts/interref/prisim.png",
+      "blurb":"In the picture above we see two images divided by and arced rainbow, the left side is a reflection of the mirror sphere, and the right side is a refracted image of the scene behind the prism.  This model agrees with my observations."
+    },
+    {
+      "title":"Rubik's Cube Revisited",
+      "link" :"/posts/rubixcube2/",
+      "pic"  :"/posts/rubixcube2/cube.png",
+      "blurb":"A rubik's cube web app made in Unity"
+    },
+    {
+      "title":"Maze Generation and Path Finding",
+      "link" :"/posts/maze/",
+      "pic"  :"/posts/maze/maze.png",
+      "blurb":"There are two fundamental algorithms at play here, A* pathfinding and the recursive backtracker which generates the mazes."
+    },
+    {
+      "title":"Ray Tracing a Black Hole on The GPU",
+      "link" :"/posts/blackhole/",
+      "pic"  :"/posts/blackhole/blackhole.png",
+      "blurb":"In my previous article on ray tracing, the examples I provided could take up to a few minuets to render.  This is because I implemented the algorithm in javascript using the CPU.  With that method, each ray is traced sequentially (one after the other) for every single pixel on the screen.  This is unnecessary because the color value at each pixel is completely independent of every other pixel; therefore it makes a lot more sense to trace every ray in parallel (simultaneously) on the GPU. I found that I can do this using the OpenGL Shading Language."
+    },
+    {
+      "title":"Simulating 3D Rotational Physics",
+      "link" :"/posts/physics/",
+      "pic"  :"/posts/physics/thumbnail.png",
+      "blurb":"Below you can see a cylinder fixed at its center that is otherwise free to rotate about any axis.  The cylinder is in a box with three spheres who's velocities are randomized.  The collisions of the spheres with the box are perfectly elastic so that no energy is leaked from the system. "
+    },
+    {
+      "title":"Destroying Flappy Bird with a Genetic Algorithm",
+      "link" :"/posts/flappe/",
+      "pic"  :"/posts/flappe/thumbnail.png",
+      "blurb":"This algorithm is similar but not identical to Neuro-Evolution of Augmented Topologies (NEAT).  I create a population of neural networks using a javascript translation of the code I presented in my previous article but instead of using back propagation to update the weights and biases, I mutate the network by adding a small random number to each of the weights and biases."
+    },
+    {
+      "title":"Coding a Neural Network to Recognize Hand-Written Digits",
+      "link" :"/posts/nnet/",
+      "pic"  :"/posts/nnet/thumbnail.png",
+      "blurb":"The MNIST data base contains 50,000 images for training  and 10,000 for testing.  When I trained my network for one epoch on all 50,000 images it correctly classified 9,101 out of the 10,000 test images, giving it a success rate 91%."
+    }
+  ]
+}

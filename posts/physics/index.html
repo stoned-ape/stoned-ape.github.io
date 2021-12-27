@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+  </head>
+  <body>
+    <script>
+      let POST_TITLE="Simulating 3D Rotational Physics"
+    </script>
+    <script src="/posts/posts.js"></script>
+    <div class="post_body">
+      <p>
+      Below you can see a cylinder fixed at its center that is otherwise free to rotate about any axis.  The cylinder is in a box with three spheres who's velocities are randomized.  The collisions of the spheres with the box are perfectly elastic so that no energy is leaked from the system.
+      </p><p>
+      <iframe width='600' height='600' src="/posts/physics/phizzy1/index.html"></iframe>
+      </p><p>
+
+      View code <a href="https://editor.p5js.org/mark-turpen@tamu.edu/sketches/JbaRk5xvI">here:</a>
+      </p><p>
+      </p><p>
+      The velocities after the collision of two spheres are computed as follows.  Note that a variable in <b>bold</b> represents a vector quantity.
+      </p><p>
+      m1,m2: mass of the two spheres
+      </p><p>
+      <b>v1i,v2i</b>: initial velocities
+      </p><p>
+      <b>v1f,v2f</b>: velocities after collision (what we need to compute)
+      </p><p>
+      <b>L</b>: normalized vector parallel to the line connecting the centers of the two spheres<b></b>
+      </p><p>
+      proj(<b>b</b>,<b>a</b>): vector projection of <b>b</b> onto <b>a</b>
+      </p><p>
+      <b>v1f</b> = <b>v1i</b> - proj(<b>v1i</b>,<b>L</b>) + (m2/m1)*proj(<b>v2i</b>,<b>L</b>)
+      </p><p>
+      <b>v2f</b> = <b>v2i</b> - proj(<b>v2i</b>,-<b>L</b>) + (m1/m2)*proj(<b>v1i</b>,-<b>L</b>)
+      </p><p>
+      This operation is equivalent to swapping the components of the momentums that are along the line connecting the spheres.  This swapping operation conserves momentum.  So if there is a head on collision between a moving sphere and a stationary sphere the moving sphere stops, and the stationary sphere begins to move.
+      </p><p>
+      The collision between a sphere and a cylinder, is quite a bit tricker because it changes the cylinders angular velocity and axis of rotation.
+      </p><p>
+      <b>L</b>: normalized vector parallel to the shortest line between the sphere's center and the cylinder
+      </p><p>
+      I: cylinders moment of inertia
+      </p><p>
+      m: mass of the sphere
+      </p><p>
+      <b>vi</b>: initial velocity of the sphere
+      </p><p>
+      <b>vf</b>: final velocity of the sphere (need to compute)
+      </p><p>
+      wi: initial angular velocity of cylinder
+      </p><p>
+      wf: final angular velocity of cylinder (need to compute)
+      </p><p>
+      <b>ai</b>: initial rotation axis of cylinder
+      </p><p>
+      <b>af</b>: final rotation axis of cylinder (need to compute)
+      </p><p>
+      <b>o</b>: vector parallel to the cylinder
+      </p><p>
+      KE1 = (1/2)*m*|proj(<b>vi</b>,L)|^2   : kinetic energy of the sphere in the direction of <b>L</b>
+      </p><p>
+      wf = wi+sqrt(2*KE1/I)-|cross(<b>o</b>,<b>a</b>*wi)|
+      </p><p>
+      KE2 = (1/2)*I*|cross(<b>o</b>,<b>ai</b>*wi)|^2    :kinetic energy of cylinder in the direction of <b>L</b>
+      </p><p>
+      <b>vf</b> = <b>vi</b> - proj(<b>vi</b>,<b>L</b>) + <b>L</b>*sqrt(2*KE2/m)
+      </p><p>
+      <b>tv</b> = cross(<b>ai</b>,<b>o</b>)*wi  : tangential velocity
+      </p><p>
+      <b>af</b> = cross(<b>o</b>,<b>tv</b> - proj(<b>tv</b>,<b>L</b>) + proj(<b>vi</b>,<b>L</b>))
+      </p><p>
+      <b>af</b>=<b>af</b>/|<b>af</b>|   : normalize axis
+      </p>
+      <p>
+        This operation is the rotation analogue of the momentum swap described earlier, but instead of swapping the momentums parallel to <b>L</b> we swap kinetic energies which are parallel to <b>L</b>.
+      </p>
+      <p>
+        <iframe width='490' height='480' src="/posts/physics/phizzy2/index.html"></iframe>
+      </p>
+      <p>
+        View code <a href="https://editor.p5js.org/mark-turpen@tamu.edu/sketches/KFUmUsytY">here:</a>
+      </p>
+      <p>
+        In the window above, Ive rendered this program using ray marching for a more realistic effect.
+      </p>
+      <img src="/posts/physics/thumbnail.png">
+    </div>
+  </body>
+</html>

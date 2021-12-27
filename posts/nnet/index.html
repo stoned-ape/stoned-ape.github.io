@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+  </head>
+  <body>
+    <script>
+      let POST_TITLE="Destroying Flappy Bird with a Genetic Algorithm"
+    </script>
+    <script src="/posts/posts.js"></script>
+    <div class="post_body">
+      <p>
+      Click and drag on the window below to draw a digit from 0 to 9, then press "compute" to see what digit the network thinks you drew.  Press "clear" to clear the screen.
+      </p>
+      <p>
+        <iframe width='400' height='460' src="/posts/nnet/netjs/index.html"></iframe>
+      </p>
+      <p>
+        View code <a href="https://editor.p5js.org/mark-turpen@tamu.edu/sketches/qiOiIBT-2">here:</a>
+      </p>
+      <p>
+        Below, you can see the python code I wrote to implement a three layer feed-forward neural network that classifies images of hand-written digits from the MNIST data base.  This project is almost entirely based on the book <I>Neural Networks and Deep Learning</I> by Michael Nielsen which you can read <a href="http://neuralnetworksanddeeplearning.com/chap1.html">here</a>.  I won't be attempting to explain how neural networks function because the book can do a far superior job.  If you compare my code to the code in the book, you will notice they are quite different.  This is because I worked solely off the mathematics in the book when writing my code.  The differences are only superficial since both programs use the same architecture, settings, and data.  The MNIST data base contains 50,000 images for training  and 10,000 for testing.  When I trained my network for one epoch on all 50,000 images it correctly classified 9,101 out of the 10,000 test images, giving it a success rate 91%.  This much better than what we would expect through random guessing which is a 10% accuracy since the network can classify an image as any digit from 0 to 9 inclusive.
+      </p>
+      <p>
+        Below is graph created by the program that allows us to visually gauge the networks performance on the first 25 test images.  Each image has two numbers above and to the left of itself.  The rightmost number is the network's classification of the image, and the left most number is the classification given by the person who drew the digit.  We can see that the network is correct on all but two of the 25 images.  Notice how the network miss labeled the bottom left image as a seven.  This is understandable since the only feature differentiating it from a nine is a few black pixels in the center.  I wouldn't expect a human to make this error; however, we humans have seen billions of nines and this network has only seen 5,000.
+      </p>
+      <p>
+        <img src="/posts/nnet/thumbnail.png">
+      </p>
+      <p>
+        If you would like to run this program yourself, go to my GitHub repository <a href="https://github.com/Mark-Turpen/NeuralNet2">here</a> and download the files "NeuralNet.py" and "mist.npz".  Then, while in your downloads folder, type "python NeuralNet.py" into the terminal.  Once it finishes training, it will display the network's accuracy across all test images and create a plot very similar to the one above.  For this to work, you will need to have python 3 installed as well as the libraries: math, random, numpy, matplotlib, and time.  This network takes about and hour to train on my MacBook, but it might take more or less time depending on your device.
+      </p>
+      <p>
+        After I ported this model to javascript and created the drawing app at the top of the page, I ran
+        an experiment to see how accurate it was at recognizing digits drawn with a key board.  After 115
+        tests, the accuracy was 84%.  This accuracy is understandably lower because digits drawn with a
+        mouse look quite different to those drawn with a pen.
+      </p>
+    </div>
+  </body>
+</html>

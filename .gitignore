@@ -1,4 +1,4 @@
-*.o 
- a.out 
- *.dSYM 
-
+*.o
+a.out
+*.dSYM
+tests

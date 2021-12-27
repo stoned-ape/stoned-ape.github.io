@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+  </head>
+  <body>
+    <script>
+      let POST_TITLE="Making Music With Fourier Series / Audiojack Waveform Generator"
+    </script>
+    <script src="/posts/posts.js"></script>
+    <div class="post_body">
+      <p>
+        Click play to hear the music.  Use the other buttons to switch between different waveforms.
+      </p>
+      <p>
+      </p>
+      <p>
+        <iframe width='500' height='340' src="/posts/music/finalwave/index.html"></iframe>
+      </p>
+      <p>
+      View code <a href="https://editor.p5js.org/mark-turpen@tamu.edu/sketches/9mOzrHRun">here:</a>
+      </p>
+      <p>
+      The graph that appears in the animations is the Fourier Transform of the sound at a give time.  Red bars on the left
+      corespond to low frequencies, and violet bars on the right correspond to high frequencies.  Notices how the graph
+      is different in each of the four windows.
+      </p>
+      <p>
+        <img src="/posts/music/fourier.png">
+      </p>
+      <p>
+        Creating an algorithm that plays music should be pretty simple if we have a function that plays a tone.
+        Every note on a piece of sheet music corresponds to a certain frequency. A ,for example, is 440 Hz.  If we want
+        to want to move up one half step (or one piano key) to A sharp, we multiply 440 by the 12th root of 2.  Since moving
+        up one octave is equivalent to moving up 12 half steps, moving up one octave doubles the frequency.  These mathematical
+        facts give us all the information we need to compute the frequency of any note.  We can use the time signature
+        of the song, the number of measures we've played so far, and the computer clock to determine when to play a given note.
+        This is exactly what is implement in the window labeled 'Sine Wave'.  You will notice that it is very bland, boring,
+        and unrealistic.  What we are lacking is timber, or the flavor of the music.  Timber is the reason why the same song
+        sounds different on different instruments, and can be mathematically described as the shape of the wave form.  The
+        only function I could use to play sounds in this program was a sine wave oscillator.  This isn't an obstacle
+        because we can represent any function we want as a sum of sine waves using a Fourier series.
+      </p>
+      <p>
+        The sawtooth wave can be expressed as :
+      </p>
+      <p>
+        <img src="/posts/music/sawtooth.png">
+      </p>
+      <p>
+        The triangle wave:
+      </p>
+      <p>
+        <img src="/posts/music/triangle.png">
+      </p>
+      <p>
+        The square wave:
+      </p>
+      <p>
+        <img src="/posts/music/square.png">
+      </p>
+      <p>
+        Since we can represent any arbitrary function, theres no reason why I can't just make one up.  The wave form in the
+        final window is my favorite and it looks like this:
+      </p>
+      <p>
+        <img src="/posts/music/random.png">
+      </p>
+      <p>
+        Try playing something your self using the following mapping.  Click on the window and start mashing keys.
+      </p>
+      <p>
+        <img src="/posts/music/keys.png">
+      </p>
+      <p>
+        <iframe width='500' height='300' src="/posts/music/interactwave/index.html"></iframe>
+        <!-- <iframe width='500' height='300' src="https://editor.p5js.org/mark-turpen@tamu.edu/embed/xwIrgVEnt"></iframe> -->
+      </p>
+      <p>
+      </p>
+      <p>
+        View code <a href="https://editor.p5js.org/mark-turpen@tamu.edu/sketches/xwIrgVEnt">here:</a>
+      </p>
+      <p>
+      </p>
+      <p>
+        The song being played is "Fur Elise" by Beethoven, which is my favorite to play on the piano.  The song is hardcoded
+        into program.  The original Java version of this program can read directly from midi files but I opted to avoid
+        translating that functionality since it is unnecessary for this demonstration.
+      </p>
+      <p>
+        You may recognize the square and triangle waves from an AC function generator.  The music signals this program creates
+        begin as currents in an audio-jack wire that are pushed through a coil.  By Faraday's Law, the changing currents
+        induce a changing magnetic field which pushes and pulls on a permanent magnet in your speakers which vibrates the air
+        to create sound.  We don't have to use a coil though, we can just plug the audio-jack into a circuit and use the signal
+        as it is.  The voltage of this output is much to small for practical uses, but we can use an operational amplifier to make
+        the signal stronger.  See the schematic below.
+      </p>
+      <p>
+        <img src="/posts/music/circuit.png">
+      </p>
+      <p>
+        This circuit allows us to visualize a signal with blinking LEDs.  Ive implemented this circuit as a proof of concept
+        in the video below.  Notice how the frequency decreases from 10 Hz to  1 Hz.
+      </p>
+      <p>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/oZ2JEoCCWjM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </p>
+      <p>
+        This program is in some sense better than a traditional function generator because we can use it to create arbitrary
+        waveforms.  Unfortunately I don't have an oscilloscope so have no way to know exactly how accurate
+        this technique is for signal generation.
+      </p>
+    </div>
+  </body>
+</html>

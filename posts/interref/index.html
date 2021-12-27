@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+  </head>
+  <body>
+    <script>
+      let POST_TITLE="Modeling Diffusion and Total Internal Reflection with Ray Marching"
+    </script>
+    <script src="/posts/posts.js"></script>
+    <div class="post_body">
+      <iframe width="640" height="360" frameborder="0" src="https://www.shadertoy.com/embed/3tfyRn?gui=true&t=10&paused=true&muted=false" allowfullscreen></iframe>
+      <p>
+        View code <a href="https://www.shadertoy.com/view/3tfyRn/a>">here:</a>
+      </p>
+      <p>
+        Press play in the window above to see how the reflected and refracted images change as the prism rotates.  The light source is
+        white but the light coming out of the prism is a rainbow.  This is because the index of refraction of glass depends on
+        the frequency of the light.  In conventional ray marching we only shoot one white ray per pixel, in this implementation we
+        shoot three rays per pixel, a red, green, and blue ray.  This is necessary because a blue ray will be refracted by a smaller
+        angle than a red, or green ray.
+      </p>
+      <p>
+        <img src="/posts/interref/thumbnail.png">
+      </p>
+      <p>
+        In the picture above we see two images divided by and arced rainbow, the left side is a reflection of the mirror sphere,
+        and the right side is a refracted image of the scene behind the prism.  This model agrees with my observations.
+      </p>
+      <p>
+        <img src="/posts/interref/IMG_1397.HEIC">
+      </p>
+      <p>
+        Once again we see two images divided by and arced rainbow.  The left side has a reflection of my finger, and the right side
+        has a refracted image of the window behind the prism.  This phenomena is known as total internal reflection.
+      </p>
+      <p>
+        Below you can see the effects of magnification and chromatic aberration when looking through a lens.  Press play to see
+        the animation.
+      </p>
+      <p>
+        <iframe width="420" height="230" frameborder="0" src="https://www.shadertoy.com/embed/3lsczN?gui=true&t=10&paused=true&muted=false" allowfullscreen></iframe>
+      </p>
+      <p>
+        View code <a href="https://www.shadertoy.com/view/3lsczN/a>">here:</a>
+      </p>
+      <p>
+        This program can also handle caustics in certain situations.  Notice how the lens can focus light from above onto the floor.
+      </p>
+      <p>
+        <img src="/posts/interref/focus.png">
+      </p>
+      <p>
+        <img src="/posts/interref/artsy.png">
+      </p>
+    </div>
+  </body>
+</html>
